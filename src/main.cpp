@@ -79,5 +79,16 @@ int main() {
     std::cout << "theta3=" << p3.theta() << " nu3=" << p3.nu()
           << " x3=" << p3.position().x << " y3=" << p3.position().y << "\n";
 
+    MeshPoint pc{ {0.0, 0.1}, -0.10, 0.30, 1.22 };
+    MeshPoint pax = axis_point( CMinusParent{pc}, 1.22 );
+    std::cout << "theta3=" << pax.theta() << " nu3=" << pax.nu()
+          << " x3=" << pax.position().x << " y3=" << pax.position().y << "\n";
+
+    MeshPoint wp_parent{ {0.1, 0.2}, 0.10, 0.30, 1.22 };
+    MeshPoint prev_wall{ {0.0, 0.3}, 0.15, 0.20, 1.22 };  // nu here is arbitrary; only its theta is read
+    MeshPoint wp = wall_point( CPlusParent{wp_parent}, prev_wall, 1.22 );
+    std::cout << "theta3=" << wp.theta() << " nu3=" << wp.nu()
+          << " x3=" << wp.position().x << " y3=" << wp.position().y << "\n";
+
     return 0;  
 }
