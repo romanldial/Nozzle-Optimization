@@ -68,5 +68,9 @@ int main() {
     nozzle::moc::MeshPoint p{ {0.0, 0.34}, 0.0, 1.185, 1.22 };
     std::cout << "M = " << p.mach() << ", mu = " << p.mu() << " rad\n";
 
+    nozzle::moc::Solution sol{ 1.22 };
+    size_t idx = sol.add_point(p);   // p is the MeshPoint you already made
+    std::cout << "added point at index " << idx << "\n";
+
     return 0;  
 }

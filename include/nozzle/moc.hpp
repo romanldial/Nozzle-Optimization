@@ -1,6 +1,7 @@
 // Copyright Roman Dial 2026
 #pragma once
 
+#include <vector>
 #include "nozzle/geometry.hpp"  
 #include "nozzle/isentropic.hpp"
 
@@ -32,5 +33,24 @@ namespace nozzle::moc {
         double mach_;
         double mu_;
     };
+
+    class Solution {
+        public:
+        explicit Solution(double gamma)
+            : gamma_{gamma}
+        {}
+        
+        size_t add_point(MeshPoint point) {
+            points_.push_back(point);
+            return points_.size() - 1;
+        }
+
+        
+
+        private:
+            std::vector<MeshPoint> points_; 
+            std::vector<std::vector<size_t>> characteristics_; 
+            double gamma_;           
+};
 
 }
