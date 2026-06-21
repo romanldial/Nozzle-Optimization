@@ -3,6 +3,7 @@
 #pragma once
 
 #include <cmath>
+#include <cassert>
 #include "numerics/root_finding.hpp"
 
 namespace nozzle::core {
@@ -15,8 +16,7 @@ namespace nozzle::core {
 
     */
 
-    inline double exit_mach_from_pressure_ratio(const double& p0_over_pe,
-                                                const double& gamma) {
+    inline double exit_mach_from_pressure_ratio(const double& p0_over_pe, const double& gamma) {
         const double exponent = (gamma - 1.0) / gamma;
         const double bracket  = std::pow(p0_over_pe, exponent) - 1.0;
         return std::sqrt((2.0 / (gamma - 1.0)) * bracket);
@@ -114,11 +114,20 @@ namespace nozzle::core {
         
         auto df = [gamma](double M) {
             const double msm1 = M * M - 1.0;
-            const double isofactor = 1.0 * 0.5 * (gamma - 1.0) * M * M;
+            const double isofactor = 1.0 + 0.5 * (gamma - 1.0) * M * M;
             return std::sqrt(msm1) / (M * isofactor);
         };
 
         return numerics::safeguarded_newton(f, df, 1.0, 100.0);
+    }
+
+    /* Mach angle
+    
+       returns: Mach angle [rad]
+    */
+    inline double mach_angle(double mach) {
+        assert(mach >= 1.0);
+        return std::asin(1.0 / mach);
     }
 
 }   // namespace nozzle::core

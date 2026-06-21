@@ -9,6 +9,7 @@
 #include "nozzle/design_modes.hpp"
 #include "nozzle/design_result.hpp"
 #include "numerics/root_finding.hpp"
+#include "nozzle/moc.hpp"
 
 int main() {
     using namespace nozzle::design;
@@ -63,6 +64,9 @@ int main() {
 
     double M = mach_from_prandtl_meyer(1.1847, 1.22);
     std::cout << "M from nu: " << M << "\n";
+
+    nozzle::moc::MeshPoint p{ {0.0, 0.34}, 0.0, 1.185, 1.22 };
+    std::cout << "M = " << p.mach() << ", mu = " << p.mu() << " rad\n";
 
     return 0;  
 }

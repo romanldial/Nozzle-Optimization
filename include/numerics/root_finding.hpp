@@ -5,8 +5,7 @@
 
 namespace numerics {
 
-    /* Safeguarded Newton-Raphson root finder.
-       Combines Newton steps with bisection fallback
+    /* Newton-Raphson root finder with bisection fallback
 
        f, df: the function and its derivative 
        lo, hi: bracket containing the root (f must change sign across it)

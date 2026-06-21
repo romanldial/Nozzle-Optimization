@@ -2,14 +2,7 @@
 
 #pragma once
 
-namespace nozzle::geometry {
-
-    /* Geometric description of the Nozzle */
-    struct NozzleGeometry {
-        double area_ratio; // Ae/A*
-    };
-
-} // namespace nozzle::geometry
+#include "nozzle/geometry.hpp"
 
 namespace nozzle::design {
 
@@ -19,7 +12,7 @@ namespace nozzle::design {
         double exit_velocity; // exit velocity [m/s]
         double specific_impulse; // specific impulse [s]
         double thrust_coefficient; // thrust coefficient [-]
-        bool constraint_active; // did a constraint 
+        bool constraint_active; // did a constraint bind?
     };
 
     /* Complete result of a design run*/
@@ -32,12 +25,12 @@ namespace nozzle::design {
     struct ScaledDesignResult {
         DesignResult design; 
 
-        double throat_area; // A*  [m^2]
-        double exit_area; // Ae  [m^2]
-        double throat_diameter; // D*  [m]
-        double exit_diameter; // De  [m]
-        double mass_flow; // mdot [kg/s], ideal/choked
-        double thrust; // F   [N]
+        double throat_area; // A* [m^2]
+        double exit_area; // Ae [m^2]
+        double throat_diameter; // D* [m]
+        double exit_diameter; // De [m]
+        double mass_flow; // mdot [kg/s]
+        double thrust; // F [N]
     };
     
 } // namespace nozzle::design

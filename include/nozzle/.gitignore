@@ -1,7 +1,0 @@
-# Build output
-build/
-
-# Editor / OS clutter
-.vscode/
-.DS_Store
-*.swp
