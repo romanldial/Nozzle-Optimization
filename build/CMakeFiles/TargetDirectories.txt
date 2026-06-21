@@ -1,3 +1,0 @@
-/home/roman_dial/MyGithub/Nozzle-Optimization/build/CMakeFiles/nozzle_demo.dir
-/home/roman_dial/MyGithub/Nozzle-Optimization/build/CMakeFiles/edit_cache.dir
-/home/roman_dial/MyGithub/Nozzle-Optimization/build/CMakeFiles/rebuild_cache.dir

@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/nozzle_demo.dir/link.d CMakeFiles/nozzle_demo.dir/src/main.cpp.o -o nozzle_demo
