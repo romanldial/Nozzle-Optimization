@@ -72,5 +72,12 @@ int main() {
     size_t idx = sol.add_point(p);   // p is the MeshPoint you already made
     std::cout << "added point at index " << idx << "\n";
 
+    using namespace nozzle::moc;
+    MeshPoint pa{ {0.0, -0.1}, -0.05, 0.20, 1.22 };
+    MeshPoint pb{ {0.0,  0.1},  0.05, 0.20, 1.22 };
+    MeshPoint p3 = interior_point( CPlusParent{pa}, CMinusParent{pb}, 1.22 );
+    std::cout << "theta3=" << p3.theta() << " nu3=" << p3.nu()
+          << " x3=" << p3.position().x << " y3=" << p3.position().y << "\n";
+
     return 0;  
 }

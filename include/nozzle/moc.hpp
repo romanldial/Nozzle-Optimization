@@ -2,6 +2,8 @@
 #pragma once
 
 #include <vector>
+#include <cmath>
+#include <cassert>
 #include "nozzle/geometry.hpp"  
 #include "nozzle/isentropic.hpp"
 
@@ -34,6 +36,24 @@ namespace nozzle::moc {
         double mu_;
     };
 
+    /* Strong wrappers, both hold a MeshPoint but are seperate 
+       types to ensure they are passed in the correct order */
+    class CPlusParent {
+        public:
+            explicit CPlusParent(MeshPoint p) : point_{p} {}
+            const MeshPoint& point() const { return point_; }
+        private:
+            MeshPoint point_;
+    };
+
+    class CMinusParent {
+        public:
+            explicit CMinusParent(MeshPoint p) : point_{p} {}
+            const MeshPoint& point() const { return point_; }
+        private:
+            MeshPoint point_;
+    };
+
     class Solution {
         public:
         explicit Solution(double gamma)
@@ -45,12 +65,45 @@ namespace nozzle::moc {
             return points_.size() - 1;
         }
 
-        
-
         private:
             std::vector<MeshPoint> points_; 
             std::vector<std::vector<size_t>> characteristics_; 
             double gamma_;           
-};
+    };
 
+    inline MeshPoint interior_point(CPlusParent c_plus, CMinusParent c_minus, double gamma) {
+        const MeshPoint& p1 = c_plus.point(); // C+ parent: carries theta - nu
+        const MeshPoint& p2 = c_minus.point(); // C- parent: carries theta + nu
+
+        // solve for flow at new point from two invariants along the characteristics:
+        const double k_plus = p1.theta() - p1.nu();
+        const double k_minus = p2.theta() + p2.nu();
+
+        // derrive Mach and Mach Angle at new points:
+        const double theta3 = 0.5 * (k_plus + k_minus);
+        const double nu3 = 0.5 * (k_minus - k_plus);
+        const double mach3 = core::mach_from_prandtl_meyer(nu3, gamma);
+        const double mu3 = core::mach_angle(mach3);
+
+        // averaged characteristic slopes:
+        const double angle_plus = 0.5 * ((p1.theta() + p1.nu()) + (theta3 + mu3));
+        const double angle_minus = 0.5 * ((p2.theta() - p2.nu()) + (theta3 - mu3));
+        const double m_plus = std::tan(angle_plus);
+        const double m_minus = std::tan(angle_minus);
+
+        // locate new point as the intersection of two lines:
+        const double denom = m_plus - m_minus;
+        assert(std::abs(denom) > 1e-12); 
+
+        const double x1 = p1.position().x;
+        const double y1 = p1.position().y;
+        const double x2 = p2.position().x;
+        const double y2 = p2.position().y;
+
+        const double x3 = ((y2 - y1) + (m_plus * x1 - m_minus * x2)) / denom;
+        const double y3 = y1 + m_plus * (x3 - x1);
+
+        // assemble solved node:
+        return MeshPoint{ geometry::Point2D{x3, y3}, theta3, nu3, gamma };
+    }
 }
