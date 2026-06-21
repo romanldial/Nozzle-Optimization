@@ -36,8 +36,11 @@ namespace nozzle::moc {
         double mu_;
     };
 
-    /* Strong wrappers, both hold a MeshPoint but are seperate 
-       types to ensure they are passed in the correct order */
+    /* Strong wrappers FOR C+ AND C- 
+    
+       both hold a MeshPoint but are seperate types 
+       to ensure they are passed in the correct order 
+    */
     class CPlusParent {
         public:
             explicit CPlusParent(MeshPoint p) : point_{p} {}
@@ -71,7 +74,10 @@ namespace nozzle::moc {
             double gamma_;           
     };
 
-    /* COMMENT HERE */
+    /* Interior point: 
+       
+       solved from two parents via the C+ and C- invariants
+    */
     inline MeshPoint interior_point(CPlusParent c_plus, CMinusParent c_minus, double gamma) {
         const MeshPoint& p1 = c_plus.point(); // C+ parent: carries theta - nu
         const MeshPoint& p2 = c_minus.point(); // C- parent: carries theta + nu
@@ -87,8 +93,8 @@ namespace nozzle::moc {
         const double mu3 = core::mach_angle(mach3);
 
         // averaged characteristic slopes:
-        const double angle_plus = 0.5 * ((p1.theta() + p1.nu()) + (theta3 + mu3));
-        const double angle_minus = 0.5 * ((p2.theta() - p2.nu()) + (theta3 - mu3));
+        const double angle_plus = 0.5 * ((p1.theta() + p1.mu()) + (theta3 + mu3));
+        const double angle_minus = 0.5 * ((p2.theta() - p2.mu()) + (theta3 - mu3));
         const double m_plus = std::tan(angle_plus);
         const double m_minus = std::tan(angle_minus);
 
@@ -108,7 +114,10 @@ namespace nozzle::moc {
         return MeshPoint{ geometry::Point2D{x3, y3}, theta3, nu3, gamma };
     }
 
-    /* COMMENT HERE */
+    /* Axis point: 
+       
+       solved from a C- parent along the axis
+    */
     inline MeshPoint axis_point(CMinusParent c_minus, double gamma) {
         // flow solve
         const MeshPoint& p1 = c_minus.point(); 
@@ -136,7 +145,10 @@ namespace nozzle::moc {
         return MeshPoint{ geometry::Point2D{x3, y3}, theta3, nu3, gamma };
     }
 
-    /* COMMENT HERE */
+    /* Wall point: 
+       
+       solved from a C+ parent and a previous wall point
+    */
     inline MeshPoint wall_point(CPlusParent c_plus, const MeshPoint& prev_wall, double gamma) {
         const MeshPoint& p1 = c_plus.point();
 
