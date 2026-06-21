@@ -3,6 +3,7 @@
 #pragma once
 
 #include <cmath>
+#include "numerics/root_finding.hpp"
 
 namespace nozzle::core {
 
@@ -32,6 +33,23 @@ namespace nozzle::core {
         const double inner = 1.0 + 0.5 * gm1 * mach * mach;
         const double exponent = gp1 / (2.0 * gm1);
         return (1.0 / mach) * std::pow((2.0 / gp1) * inner, exponent);
+    }
+
+    /* Prandtl-Meyer angle: the total turning angle a supersonic flow has
+       undergone, expanding from Mach 1 to the given Mach number.
+       
+       returns:
+        mach: local Mach number (>= 1) [-]
+        gamma: ratio of specific heats [-]
+        returns: Prandtl-Meyer angle nu [rad]
+    */
+    inline double prandtl_meyer(const double mach, const double gamma) {
+        const double msm1 = mach * mach - 1.0;
+        const double gp1 = gamma + 1.0;
+        const double gm1 = gamma - 1.0;
+        const double gratio = std::sqrt(gp1 / gm1);
+        const double inner = std::sqrt((gm1 / gp1) * msm1);
+        return gratio * std::atan(inner) - std::atan(std::sqrt(msm1));
     }
 
     /* Exit temperature from chamber temp and exit Mach
@@ -71,6 +89,37 @@ namespace nozzle::core {
         return exit_velocity / g0;
     }
 
+    /* Thrust Coefficient */
+
+    inline double thrust_coefficient(const double gamma, const double pe_over_p0, const double pa_over_p0, const double area_ratio) {
+        const double gp1 = gamma + 1.0;
+        const double gm1 = gamma - 1.0;
+        const double gterm1 = (2.0 * gamma * gamma) / gm1;
+        const double gterm2 = 2.0 / gp1; 
+        const double pimterm = std::pow(pe_over_p0, (gm1 / gamma));
+        const double momentum_term = std::sqrt(gterm1 * std::pow(gterm2, (gp1 / gm1)) * (1.0 - pimterm));
+        const double pressure_term = (pe_over_p0 - pa_over_p0) * area_ratio;
+        return momentum_term + pressure_term;
+    }
+
+    /* Mach from Prandtl Meyer 
+    
+       returns: Mach [-] 
+    */
+    inline double mach_from_prandtl_meyer(double nu_target, double gamma) {
+        
+        auto f = [gamma, nu_target](double M) {
+            return prandtl_meyer(M, gamma) - nu_target;
+        };
+        
+        auto df = [gamma](double M) {
+            const double msm1 = M * M - 1.0;
+            const double isofactor = 1.0 * 0.5 * (gamma - 1.0) * M * M;
+            return std::sqrt(msm1) / (M * isofactor);
+        };
+
+        return numerics::safeguarded_newton(f, df, 1.0, 100.0);
+    }
 
 }   // namespace nozzle::core
 

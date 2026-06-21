@@ -27,5 +27,17 @@ namespace nozzle::design {
         geometry::NozzleGeometry geometry;
         design::NozzlePerformance performance;
     };
+
+    /* Complete design result with scaling */
+    struct ScaledDesignResult {
+        DesignResult design; 
+
+        double throat_area; // A*  [m^2]
+        double exit_area; // Ae  [m^2]
+        double throat_diameter; // D*  [m]
+        double exit_diameter; // De  [m]
+        double mass_flow; // mdot [kg/s], ideal/choked
+        double thrust; // F   [N]
+    };
     
 } // namespace nozzle::design

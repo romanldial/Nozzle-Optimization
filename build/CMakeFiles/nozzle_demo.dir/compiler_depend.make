@@ -6,6 +6,7 @@ CMakeFiles/nozzle_demo.dir/src/main.cpp.o: /home/roman_dial/MyGithub/Nozzle-Opti
   /home/roman_dial/MyGithub/Nozzle-Optimization/include/nozzle/design_modes.hpp \
   /home/roman_dial/MyGithub/Nozzle-Optimization/include/nozzle/design_result.hpp \
   /home/roman_dial/MyGithub/Nozzle-Optimization/include/nozzle/isentropic.hpp \
+  /home/roman_dial/MyGithub/Nozzle-Optimization/include/numerics/root_finding.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -390,8 +391,6 @@ CMakeFiles/nozzle_demo.dir/src/main.cpp.o: /home/roman_dial/MyGithub/Nozzle-Opti
 
 /usr/include/c++/13/bits/ios_base.h:
 
-/usr/include/c++/13/bits/move.h:
-
 /usr/include/x86_64-linux-gnu/sys/single_threaded.h:
 
 /usr/include/c++/13/tr1/hypergeometric.tcc:
@@ -428,6 +427,8 @@ CMakeFiles/nozzle_demo.dir/src/main.cpp.o: /home/roman_dial/MyGithub/Nozzle-Opti
 
 /usr/include/c++/13/backward/binders.h:
 
+/home/roman_dial/MyGithub/Nozzle-Optimization/include/numerics/root_finding.hpp:
+
 /usr/include/c++/13/bits/stringfwd.h:
 
 /usr/include/c++/13/bits/iterator_concepts.h:
@@ -439,12 +440,6 @@ CMakeFiles/nozzle_demo.dir/src/main.cpp.o: /home/roman_dial/MyGithub/Nozzle-Opti
 /home/roman_dial/MyGithub/Nozzle-Optimization/include/nozzle/chamber_conditions.hpp:
 
 /usr/include/c++/13/bits/stl_iterator_base_types.h:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h:
-
-/usr/include/c++/13/bits/basic_ios.tcc:
-
-/usr/include/c++/13/bits/nested_exception.h:
 
 /usr/include/alloca.h:
 
@@ -465,6 +460,12 @@ CMakeFiles/nozzle_demo.dir/src/main.cpp.o: /home/roman_dial/MyGithub/Nozzle-Opti
 /usr/include/x86_64-linux-gnu/bits/time64.h:
 
 /usr/include/c++/13/bits/basic_ios.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h:
+
+/usr/include/c++/13/bits/basic_ios.tcc:
+
+/usr/include/c++/13/bits/nested_exception.h:
 
 /usr/include/c++/13/bits/ranges_base.h:
 
@@ -491,6 +492,8 @@ CMakeFiles/nozzle_demo.dir/src/main.cpp.o: /home/roman_dial/MyGithub/Nozzle-Opti
 /usr/include/c++/13/bits/exception_defines.h:
 
 /usr/include/c++/13/bits/locale_facets.h:
+
+/usr/include/c++/13/bits/move.h:
 
 /usr/include/x86_64-linux-gnu/bits/types.h:
 

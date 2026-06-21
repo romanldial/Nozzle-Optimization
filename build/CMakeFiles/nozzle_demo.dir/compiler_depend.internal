@@ -7,6 +7,7 @@ CMakeFiles/nozzle_demo.dir/src/main.cpp.o
  /home/roman_dial/MyGithub/Nozzle-Optimization/include/nozzle/design_modes.hpp
  /home/roman_dial/MyGithub/Nozzle-Optimization/include/nozzle/design_result.hpp
  /home/roman_dial/MyGithub/Nozzle-Optimization/include/nozzle/isentropic.hpp
+ /home/roman_dial/MyGithub/Nozzle-Optimization/include/numerics/root_finding.hpp
  /usr/include/alloca.h
  /usr/include/asm-generic/errno-base.h
  /usr/include/asm-generic/errno.h
